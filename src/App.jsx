@@ -375,9 +375,7 @@ function App() {
   }, [session]);
 
   const currentFormValidity = useMemo(() => hasRequiredFields(formData), [formData]);
-
-  const adminVisibleUsers = getAllActiveTrackers().map((tracker) => tracker);
-
+  const adminVisibleUsers = getAllActiveTrackers();
   const operatorTracker = session?.user ? getTrackerForUser(session.user.id) : null;
 
   const handleLogin = (event) => {
@@ -715,7 +713,7 @@ function App() {
         </div>
       </div>
     );
-  );
+  };
 
   return (
     <div className="app-shell">
