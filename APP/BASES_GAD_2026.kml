@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<kml xmlns="http://www.opengis.net/kml/2.2">
+<Document>
+<name>BASES_GAD_2026</name>
+<description>45 Bases GAD Provincia de Buenos Aires - 2026</description>
+<Style id="redPin"><IconStyle><Icon><href>http://maps.google.com/mapfiles/ms/icons/red-dot.png</href></Icon></IconStyle></Style>
+<Placemark><name>GAD La Plata</name><styleUrl>#redPin</styleUrl><Point><coordinates>-57.9544,-34.9214,0</coordinates></Point></Placemark>
+<Placemark><name>GAD Almirante Brown</name><styleUrl>#redPin</styleUrl><Point><coordinates>-58.4005,-34.7973,0</coordinates></Point></Placemark>
+<Placemark><name>GAD Avellaneda</name><styleUrl>#redPin</styleUrl><Point><coordinates>-58.3673,-34.6614,0</coordinates></Point></Placemark>
+<Placemark><name>GAD Berazategui</name><styleUrl>#redPin</styleUrl><Point><coordinates>-58.1487,-34.7606,0</coordinates></Point></Placemark>
+<Placemark><name>GAD Esteban Echeverria</name><styleUrl>#redPin</styleUrl><Point><coordinates>-58.4545,-34.8094,0</coordinates></Point></Placemark>
+<Placemark><name>GAD Ezeiza</name><styleUrl>#redPin</styleUrl><Point><coordinates>-58.526,-34.8552,0</coordinates></Point></Placemark>
+<Placemark><name>GAD Florencio Varela</name><styleUrl>#redPin</styleUrl><Point><coordinates>-58.2771,-34.7967,0</coordinates></Point></Placemark>
+<Placemark><name>GAD Lanus</name><styleUrl>#redPin</styleUrl><Point><coordinates>-58.3924,-34.7008,0</coordinates></Point></Placemark>
+<Placemark><name>GAD Lomas de Zamora</name><styleUrl>#redPin</styleUrl><Point><coordinates>-58.4062,-34.7608,0</coordinates></Point></Placemark>
+<Placemark><name>GAD Quilmes</name><styleUrl>#redPin</styleUrl><Point><coordinates>-58.2632,-34.7216,0</coordinates></Point></Placemark>
+<Placemark><name>GAD San Martin</name><styleUrl>#redPin</styleUrl><Point><coordinates>-58.5275,-34.5738,0</coordinates></Point></Placemark>
+<Placemark><name>GAD San Isidro</name><styleUrl>#redPin</styleUrl><Point><coordinates>-58.5278,-34.4735,0</coordinates></Point></Placemark>
+<Placemark><name>GAD Tres de Febrero</name><styleUrl>#redPin</styleUrl><Point><coordinates>-58.5659,-34.6009,0</coordinates></Point></Placemark>
+<Placemark><name>GAD Moreno</name><styleUrl>#redPin</styleUrl><Point><coordinates>-58.7917,-34.6517,0</coordinates></Point></Placemark>
+<Placemark><name>GAD Merlo</name><styleUrl>#redPin</styleUrl><Point><coordinates>-58.7305,-34.6658,0</coordinates></Point></Placemark>
+<Placemark><name>GAD La Matanza</name><styleUrl>#redPin</styleUrl><Point><coordinates>-58.5631,-34.7572,0</coordinates></Point></Placemark>
+<Placemark><name>GAD Moron</name><styleUrl>#redPin</styleUrl><Point><coordinates>-58.6198,-34.6534,0</coordinates></Point></Placemark>
+<Placemark><name>GAD Tigre</name><styleUrl>#redPin</styleUrl><Point><coordinates>-58.5795,-34.4251,0</coordinates></Point></Placemark>
+<Placemark><name>GAD Pilar</name><styleUrl>#redPin</styleUrl><Point><coordinates>-58.9147,-34.4567,0</coordinates></Point></Placemark>
+<Placemark><name>GAD Escobar</name><styleUrl>#redPin</styleUrl><Point><coordinates>-58.776,-34.3413,0</coordinates></Point></Placemark>
+<Placemark><name>GAD Zarate - Campana</name><styleUrl>#redPin</styleUrl><Point><coordinates>-59.0259,-34.1681,0</coordinates></Point></Placemark>
+<Placemark><name>GAD San Nicolas</name><styleUrl>#redPin</styleUrl><Point><coordinates>-60.21,-33.3358,0</coordinates></Point></Placemark>
+<Placemark><name>GAD Pergamino</name><styleUrl>#redPin</styleUrl><Point><coordinates>-60.5727,-33.8946,0</coordinates></Point></Placemark>
+<Placemark><name>GAD Junin</name><styleUrl>#redPin</styleUrl><Point><coordinates>-60.9437,-34.5934,0</coordinates></Point></Placemark>
+<Placemark><name>GAD Chivilcoy</name><styleUrl>#redPin</styleUrl><Point><coordinates>-60.0158,-34.9038,0</coordinates></Point></Placemark>
+<Placemark><name>GAD Mercedes</name><styleUrl>#redPin</styleUrl><Point><coordinates>-59.4307,-34.6517,0</coordinates></Point></Placemark>
+<Placemark><name>GAD Lujan</name><styleUrl>#redPin</styleUrl><Point><coordinates>-59.105,-34.5703,0</coordinates></Point></Placemark>
+<Placemark><name>GAD Chacabuco</name><styleUrl>#redPin</styleUrl><Point><coordinates>-60.4749,-34.6406,0</coordinates></Point></Placemark>
+<Placemark><name>GAD Bragado</name><styleUrl>#redPin</styleUrl><Point><coordinates>-60.4886,-35.1155,0</coordinates></Point></Placemark>
+<Placemark><name>GAD 9 de Julio</name><styleUrl>#redPin</styleUrl><Point><coordinates>-60.8841,-35.4453,0</coordinates></Point></Placemark>
+<Placemark><name>GAD Trenque Lauquen</name><styleUrl>#redPin</styleUrl><Point><coordinates>-62.7348,-35.9743,0</coordinates></Point></Placemark>
+<Placemark><name>GAD Pehuajo</name><styleUrl>#redPin</styleUrl><Point><coordinates>-61.8967,-35.8121,0</coordinates></Point></Placemark>
+<Placemark><name>GAD Bahia Blanca</name><styleUrl>#redPin</styleUrl><Point><coordinates>-62.2669,-38.0055,0</coordinates></Point></Placemark>
+<Placemark><name>GAD Coronel Suarez</name><styleUrl>#redPin</styleUrl><Point><coordinates>-61.9325,-37.456,0</coordinates></Point></Placemark>
+<Placemark><name>GAD Tres Arroyos</name><styleUrl>#redPin</styleUrl><Point><coordinates>-60.2795,-38.3735,0</coordinates></Point></Placemark>
+<Placemark><name>GAD Necochea</name><styleUrl>#redPin</styleUrl><Point><coordinates>-58.7397,-38.5545,0</coordinates></Point></Placemark>
+<Placemark><name>GAD Mar del Plata</name><styleUrl>#redPin</styleUrl><Point><coordinates>-57.5426,-38.0055,0</coordinates></Point></Placemark>
+<Placemark><name>GAD Pinamar - Costa</name><styleUrl>#redPin</styleUrl><Point><coordinates>-56.8611,-37.1111,0</coordinates></Point></Placemark>
+<Placemark><name>GAD Dolores</name><styleUrl>#redPin</styleUrl><Point><coordinates>-57.6792,-36.313,0</coordinates></Point></Placemark>
+<Placemark><name>GAD Chascomus</name><styleUrl>#redPin</styleUrl><Point><coordinates>-58.0096,-35.5785,0</coordinates></Point></Placemark>
+<Placemark><name>GAD Tandil</name><styleUrl>#redPin</styleUrl><Point><coordinates>-59.1332,-37.3217,0</coordinates></Point></Placemark>
+<Placemark><name>GAD Olavarria</name><styleUrl>#redPin</styleUrl><Point><coordinates>-60.3225,-36.893,0</coordinates></Point></Placemark>
+<Placemark><name>GAD Azul</name><styleUrl>#redPin</styleUrl><Point><coordinates>-59.8578,-36.7775,0</coordinates></Point></Placemark>
+<Placemark><name>GAD Bolivar</name><styleUrl>#redPin</styleUrl><Point><coordinates>-61.111,-36.2305,0</coordinates></Point></Placemark>
+<Placemark><name>GAD San Miguel del Monte</name><styleUrl>#redPin</styleUrl><Point><coordinates>-58.8066,-35.4416,0</coordinates></Point></Placemark>
+</Document>
+</kml>

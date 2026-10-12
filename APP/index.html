@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>GEOLOCALIZACIÓN GAD - 45 BASES</title>
+    
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="manifest.json">
+    <link rel="apple-touch-icon" href="icon-192.png">
+    <meta name="theme-color" content="#003366">
+    
+    <!-- Leaflet CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    
+    <style>
+        body, html { margin: 0; padding: 0; height: 100%; font-family: Arial, sans-serif; overflow: hidden; background-color: #f4f4f9; }
+        
+        #map { width: 100%; height: 100vh; z-index: 1; }
+
+        /* Login Overlay */
+        #login-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0, 51, 102, 0.95); z-index: 9999;
+            display: flex; justify-content: center; align-items: center;
+        }
+        .login-box {
+            background: white; padding: 30px; border-radius: 8px; width: 90%; max-width: 350px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.5); text-align: center;
+        }
+        .login-box h2 { margin-top: 0; color: #003366; }
+        .login-box input {
+            width: 100%; padding: 10px; margin: 10px 0; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box;
+        }
+        .login-box button {
+            width: 100%; padding: 10px; background: #FFD700; color: #003366; border: none;
+            border-radius: 4px; font-weight: bold; cursor: pointer; margin-top: 10px;
+        }
+
+        /* Top Bar */
+        #top-bar {
+            position: absolute; top: 10px; left: 50%; transform: translateX(-50%);
+            background: rgba(255, 255, 255, 0.95); padding: 10px 20px; border-radius: 20px;
+            z-index: 1000; box-shadow: 0 2px 10px rgba(0,0,0,0.3); font-weight: bold; display: none;
+        }
+        #btn-logout {
+            position: absolute; top: 10px; right: 10px; z-index: 1000;
+            background: #d32f2f; color: white; border: none; padding: 8px 15px;
+            border-radius: 5px; cursor: pointer; display: none;
+        }
+
+        /* Form Modal */
+        #form-modal {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.6); z-index: 2000; display: none;
+            justify-content: center; align-items: center;
+        }
+        .form-content {
+            background: white; padding: 20px; border-radius: 8px; width: 90%; max-width: 400px;
+            max-height: 90vh; overflow-y: auto; box-sizing: border-box;
+        }
+        .form-content h3 { margin-top: 0; text-align: center; color: #003366; }
+        .form-content label { font-size: 12px; font-weight: bold; color: #555; display: block; margin-top: 10px; }
+        .form-content input, .form-content textarea {
+            width: 100%; padding: 8px; margin-top: 4px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box;
+        }
+        .form-actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 15px; }
+        .btn-action {
+            flex: 1; min-width: 30%; padding: 10px; color: white; border: none; border-radius: 4px;
+            cursor: pointer; text-align: center; font-weight: bold; font-size: 13px;
+        }
+        .btn-green { background: #388e3c; } .btn-red { background: #d32f2f; }
+        .btn-yellow { background: #fbc02d; color: black; } .btn-blue { background: #1976d2; }
+        .btn-close { background: #757575; width: 100%; margin-top: 10px; }
+
+        /* Custom Map Label */
+        .base-label {
+            background: rgba(255,255,255,0.8); border: 1px solid #333; border-radius: 3px;
+            padding: 2px 4px; font-size: 11px; font-weight: bold; white-space: nowrap;
+            pointer-events: none; text-align: center; margin-left: -20px;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Overlay Login -->
+    <div id="login-overlay">
+        <div class="login-box">
+            <h2>GEOLOCALIZACIÓN GAD</h2>
+            <input type="text" id="login-user" placeholder="Usuario (Ej: admin, GAD La Plata)">
+            <input type="password" id="login-pass" placeholder="Contraseña">
+            <button onclick="login()">INGRESAR</button>
+            <p id="login-error" style="color:red; font-size:12px; display:none;">Usuario o clave incorrecta</p>
+        </div>
+    </div>
+
+    <!-- UI -->
+    <div id="top-bar">Usuario: <span id="current-user-display"></span></div>
+    <button id="btn-logout" onclick="logout()">Cerrar Sesión</button>
+
+    <!-- Modal Formulario -->
+    <div id="form-modal">
+        <div class="form-content">
+            <h3 id="form-title">Base</h3>
+            
+            <label>Estado Operativo</label>
+            <div class="form-actions" style="margin-top: 5px;">
+                <button class="btn-action btn-green" onclick="cambiarEstado('VERDE')">BASE</button>
+                <button class="btn-action btn-red" onclick="cambiarEstado('ROJO')">SERVICIO</button>
+                <button class="btn-action btn-yellow" onclick="cambiarEstado('AMARILLO')">FUERA</button>
+            </div>
+
+            <label>Fecha y Hora</label>
+            <input type="datetime-local" id="f-fecha">
+
+            <label>Personal a Cargo</label>
+            <input type="text" id="f-personal" placeholder="Jerarquía y Nombre">
+
+            <label>Móvil</label>
+            <input type="text" id="f-movil" placeholder="Nro Móvil (RO)">
+
+            <label>Intervención / Nro Orden D.G.A.D.O</label>
+            <input type="text" id="f-intervencion" placeholder="Detalle">
+
+            <label>Resultado</label>
+            <textarea id="f-resultado" rows="2" placeholder="Novedades..."></textarea>
+
+            <div class="form-actions">
+                <button class="btn-action btn-blue" style="min-width: 48%;" onclick="llamarBase()">Llamar</button>
+                <button class="btn-action btn-green" style="min-width: 48%;" onclick="whatsappBase()">WhatsApp</button>
+                <button class="btn-action btn-blue" style="width: 100%;" onclick="compartirUbicacion()">Compartir Ubicación en Vivo</button>
+            </div>
+
+            <button class="btn-action btn-close" onclick="cerrarForm()">GUARDAR Y CERRAR</button>
+        </div>
+    </div>
+
+    <div id="map"></div>
+
+    <!-- Scripts -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Turf.js/6.5.0/turf.min.js"></script>
+    <script src="https://unpkg.com/leaflet-omnivore@0.3.4/leaflet-omnivore.min.js"></script>
+
+    <script>
+        // Variables
+        let currentUser = null;
+        let isSuperAdmin = false;
+        let map;
+        let basesLayer = L.layerGroup();
+        let voronoiLayer = L.layerGroup();
+        let labelLayer = L.layerGroup();
+        
+        let basesData = [];
+        let partidosData = [];
+        let currentSelectedBase = null;
+
+        const pastelColors = ['#FFB3BA', '#FFDFBA', '#FFFFBA', '#BAFFC9', '#BAE1FF', '#E2CBF7', '#F1CBFF', '#CBEBFF', '#CBFFEC', '#FFCBF3', '#FFE4CB'];
+
+        // INIT
+        function login() {
+            const u = document.getElementById('login-user').value.trim();
+            const p = document.getElementById('login-pass').value.trim();
+            const error = document.getElementById('login-error');
+
+            if (u === 'admin' && p === 'admin123') {
+                iniciarSesion('ADMIN', true);
+            } else if (p === 'gad2026') {
+                iniciarSesion(u, false);
+            } else {
+                error.style.display = 'block';
+            }
+        }
+
+        function iniciarSesion(user, isSuper) {
+            currentUser = user;
+            isSuperAdmin = isSuper;
+            localStorage.setItem('gad_user', JSON.stringify({ user, isSuperAdmin }));
+            
+            document.getElementById('login-overlay').style.display = 'none';
+            document.getElementById('top-bar').style.display = 'block';
+            document.getElementById('btn-logout').style.display = 'block';
+            document.getElementById('current-user-display').innerText = user;
+            
+            initMap();
+        }
+
+        function logout() {
+            localStorage.removeItem('gad_user');
+            location.reload();
+        }
+
+        window.onload = () => {
+            const saved = localStorage.getItem('gad_user');
+            if (saved) {
+                const s = JSON.parse(saved);
+                iniciarSesion(s.user, s.isSuperAdmin);
+            }
+        };
+
+        function initMap() {
+            if(map) return;
+            map = L.map('map').setView([-36.5, -60.0], 6);
+
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                attribution: '&copy; OpenStreetMap'
+            }).addTo(map);
+
+            basesLayer.addTo(map);
+            voronoiLayer.addTo(map);
+            labelLayer.addTo(map);
+
+            cargarDatos();
+        }
+
+        function cargarDatos() {
+            let loadedBases = false;
+            let loadedPartidos = false;
+
+            // Load Bases
+            omnivore.kml('BASES_GAD_2026.kml').on('ready', function(e) {
+                let id = 0;
+                e.target.eachLayer(layer => {
+                    if (layer instanceof L.Marker) {
+                        const name = layer.feature.properties.name || "Base";
+                        const latLng = layer.getLatLng();
+                        const estado = localStorage.getItem('est_' + name) || 'VERDE';
+                        basesData.push({ id: id++, name, lat: latLng.lat, lng: latLng.lng, estado });
+                    }
+                });
+                loadedBases = true;
+                if(loadedPartidos) procesarVoronoi();
+            });
+
+            // Load Partidos
+            omnivore.kml('PARTIDOS_PBA.kml').on('ready', function(e) {
+                e.target.eachLayer(layer => {
+                    if (layer.feature && layer.feature.geometry.type === 'Point') {
+                        partidosData.push({
+                            name: layer.feature.properties.name,
+                            coord: [layer.getLatLng().lng, layer.getLatLng().lat]
+                        });
+                    }
+                });
+                loadedPartidos = true;
+                if(loadedBases) procesarVoronoi();
+            });
+        }
+
+        function obtenerColorEstado(estado) {
+            if(estado === 'ROJO') return '#d32f2f';
+            if(estado === 'AMARILLO') return '#fbc02d';
+            return '#388e3c';
+        }
+
+        function procesarVoronoi() {
+            basesLayer.clearLayers();
+            voronoiLayer.clearLayers();
+            labelLayer.clearLayers();
+
+            if (basesData.length === 0) return;
+
+            // Voronoi Turf.js
+            const puntosBases = turf.featureCollection(basesData.map(b => turf.point([b.lng, b.lat], b)));
+            const bboxPBA = [-63.39, -41.03, -56.66, -33.26];
+            const voronoiPolygons = turf.voronoi(puntosBases, {bbox: bboxPBA});
+
+            // Asignar partidos a bases por distancia (dentro del Voronoi)
+            const partidosAsignados = {};
+            basesData.forEach(b => partidosAsignados[b.name] = []);
+
+            partidosData.forEach(p => {
+                const pt = turf.point(p.coord);
+                let nearestBase = null;
+                let minDist = Infinity;
+                basesData.forEach(b => {
+                    const d = turf.distance(pt, turf.point([b.lng, b.lat]));
+                    if(d < minDist) { minDist = d; nearestBase = b.name; }
+                });
+                if(nearestBase) partidosAsignados[nearestBase].push(p.name);
+            });
+
+            // Dibujar
+            voronoiPolygons.features.forEach((feature, index) => {
+                if (!feature) return;
+                const baseObj = puntosBases.features[index].properties;
+                const colorBorde = obtenerColorEstado(baseObj.estado);
+                const colorRelleno = pastelColors[index % pastelColors.length];
+
+                // Polígono Voronoi
+                const polygon = L.geoJSON(feature, {
+                    style: { color: colorBorde, weight: 3, fillColor: colorRelleno, fillOpacity: 0.4 }
+                }).addTo(voronoiLayer);
+
+                const listPartidos = partidosAsignados[baseObj.name].join(', ') || 'Ninguno detectado en KML';
+                polygon.on('click', () => {
+                    alert(`JURISDICCIÓN: ${baseObj.name}\n\nPARTIDOS ASIGNADOS:\n${listPartidos}`);
+                });
+
+                // Pin Rojo / Marcador
+                const markerIcon = L.divIcon({
+                    className: 'custom-pin',
+                    html: `<div style="background-color:${colorBorde}; width:16px; height:16px; border-radius:50%; border:2px solid white; box-shadow: 0 0 5px black;"></div>`,
+                    iconSize: [16, 16]
+                });
+                const marker = L.marker([baseObj.lat, baseObj.lng], {icon: markerIcon}).addTo(basesLayer);
+                marker.on('click', () => abrirFormulario(baseObj));
+
+                // Label Base Name
+                L.marker([baseObj.lat + 0.05, baseObj.lng], {
+                    icon: L.divIcon({ className: 'base-label', html: baseObj.name, iconSize: [100, 20] })
+                }).addTo(labelLayer);
+            });
+        }
+
+        // Formulario
+        function abrirFormulario(base) {
+            if (!isSuperAdmin && currentUser !== base.name) {
+                alert("Acceso denegado: Solo puedes editar tu propia base.");
+                return;
+            }
+            currentSelectedBase = base;
+            document.getElementById('form-title').innerText = base.name;
+            
+            const data = JSON.parse(localStorage.getItem('form_' + base.name) || '{}');
+            document.getElementById('f-fecha').value = data.fecha || new Date().toISOString().slice(0,16);
+            document.getElementById('f-personal').value = data.personal || '';
+            document.getElementById('f-movil').value = data.movil || '';
+            document.getElementById('f-intervencion').value = data.intervencion || '';
+            document.getElementById('f-resultado').value = data.resultado || '';
+
+            document.getElementById('form-modal').style.display = 'flex';
+        }
+
+        function cerrarForm() {
+            if(currentSelectedBase) {
+                const data = {
+                    fecha: document.getElementById('f-fecha').value,
+                    personal: document.getElementById('f-personal').value,
+                    movil: document.getElementById('f-movil').value,
+                    intervencion: document.getElementById('f-intervencion').value,
+                    resultado: document.getElementById('f-resultado').value,
+                };
+                localStorage.setItem('form_' + currentSelectedBase.name, JSON.stringify(data));
+            }
+            document.getElementById('form-modal').style.display = 'none';
+            currentSelectedBase = null;
+        }
+
+        function cambiarEstado(nuevoEstado) {
+            if (!currentSelectedBase) return;
+            const b = basesData.find(x => x.name === currentSelectedBase.name);
+            if(b) {
+                b.estado = nuevoEstado;
+                localStorage.setItem('est_' + b.name, nuevoEstado);
+                procesarVoronoi();
+            }
+        }
+
+        function llamarBase() { alert(`Llamando a central...`); }
+        
+        function whatsappBase() {
+            const m = document.getElementById('f-movil').value;
+            const i = document.getElementById('f-intervencion').value;
+            const text = encodeURIComponent(`Novedades Base ${currentSelectedBase.name} | Móvil: ${m} | Intervención: ${i}`);
+            window.open(`https://wa.me/?text=${text}`, '_blank');
+        }
+
+        function compartirUbicacion() {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(pos => {
+                    const url = `https://www.openstreetmap.org/?mlat=${pos.coords.latitude}&mlon=${pos.coords.longitude}#map=16/${pos.coords.latitude}/${pos.coords.longitude}`;
+                    window.open(`https://wa.me/?text=Ubicación%20D.G.A.D.O:%20${encodeURIComponent(url)}`, '_blank');
+                });
+            }
+        }
+
+        // SW PWA
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('sw.js').catch(err => console.log('SW Error', err));
+            });
+        }
+    </script>
+</body>
+</html>
