@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GEOLOCALIZACIÓN GAD - 45 BASES OPERATIVAS</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <style>
+        body, html { margin: 0; padding: 0; height: 100%; font-family: Arial, sans-serif; }
+        #map { width: 100%; height: 100vh; }
+        #panel {
+            position: absolute; top: 10px; right: 10px; z-index: 1000;
+            background: white; padding: 15px; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+            width: 300px; max-height: 90vh; overflow-y: auto;
+        }
+        select, input { width: 100%; padding: 8px; margin-bottom: 10px; border: 1px solid #ccc; border-radius: 4px; }
+        .base-item { padding: 10px; border-bottom: 1px solid #eee; cursor: pointer; font-size: 13px; }
+        .base-item:hover { background-color: #f9f9f9; }
+    </style>
+</head>
+<body>
+
+<div id="panel">
+    <h3>Bases GAD 2026</h3>
+    <input type="text" id="buscador" placeholder="Buscar por base, partido o titular...">
+    <select id="filtro-coordinacion">
+        <option value="ALL">Todas las Coordinaciones</option>
+        <option value="AMBA NORTE I">AMBA Norte I</option>
+        <option value="AMBA NORTE II">AMBA Norte II</option>
+        <option value="AMBA OESTE">AMBA Oeste</option>
+        <option value="AMBA SUR I">AMBA Sur I</option>
+        <option value="AMBA SUR II">AMBA Sur II</option>
+        <option value="REGION CAPITAL">Región Capital</option>
+        <option value="REGION ATLANTICA">Región Atlántica</option>
+        <option value="REGION INTERIOR SUR">Región Interior Sur</option>
+        <option value="REGION INTERIOR CENTRO">Región Interior Centro</option>
+        <option value="REGION INTERIOR NORTE I">Región Interior Norte I</option>
+        <option value="REGION INTERIOR NORTE II">Región Interior Norte II</option>
+    </select>
+    <div id="lista-bases"></div>
+</div>
+
+<div id="map"></div>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script src="https://unpkg.com/leaflet-omnivore@0.3.4/leaflet-omnivore.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Turf.js/6.5.0/turf.min.js"></script>
+
+<script>
+    // Inicialización del Mapa
+    const map = L.map('map').setView([-36.0, -60.0], 6);
+    L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
+        attribution: '&copy; OpenStreetMap contributors &copy; CARTO'
+    }).addTo(map);
+
+    // Mapeo de colores por coordinación extraídos del KML
+    const coloresCoord = {
+        "AMBA NORTE I": "#4A90E2",
+        "AMBA NORTE II": "#26A69A",
+        "AMBA OESTE": "#FB8C00",
+        "AMBA SUR I": "#E53935",
+        "AMBA SUR II": "#D81B60",
+        "REGION CAPITAL": "#8E24AA",
+        "REGION ATLANTICA": "#1E88E5",
+        "REGION INTERIOR SUR": "#7CB342",
+        "REGION INTERIOR CENTRO": "#FDD835",
+        "REGION INTERIOR NORTE I": "#43A047",
+        "REGION INTERIOR NORTE II": "#00897B"
+    };
+
+    let basesLayer = L.layerGroup().addTo(map);
+    let polygonLayer = L.layerGroup().addTo(map);
+    let basesData = [];
+
+    // Función principal para cargar y fusionar KMLs
+    function inicializarMapa() {
+        // Carga de bases operativas
+        omnivore.kml('BASES_GAD_2026.kml').on('ready', function(e) {
+            e.target.eachLayer(function(layer) {
+                if (layer instanceof L.Marker) {
+                    const desc = layer.feature.properties.description || "";
+                    const coordMatch = desc.match(/Coordinación:<\/b>\s*([^<]+)/);
+                    const coordinacion = coordMatch ? coordMatch[1].trim() : "DESCONOCIDA";
+                    const color = coloresCoord[coordinacion] || "#333333";
+
+                    // Estilo de marcadores
+                    const markerIcon = L.divIcon({
+                        className: 'custom-icon',
+                        html: `<div style="background-color:${color}; width:15px; height:15px; border-radius:50%; border:2px solid white; box-shadow: 0 0 4px rgba(0,0,0,0.5);"></div>`,
+                        iconSize: [15, 15]
+                    });
+                    layer.setIcon(markerIcon);
+                    layer.bindPopup(`<b>${layer.feature.properties.name}</b><br>${desc}`);
+                    
+                    basesData.push({
+                        layer: layer,
+                        name: layer.feature.properties.name,
+                        coordinacion: coordinacion,
+                        desc: desc,
+                        latLng: layer.getLatLng()
+                    });
+                }
+            });
+            renderLista();
+            basesLayer.addLayer(e.target);
+        });
+
+        // Carga de límites PBA y fusión con Turf.js (Opción A implementada)
+        omnivore.kml('PARTIDOS_PBA.kml').on('ready', function(e) {
+            let features = [];
+            e.target.eachLayer(function(layer) {
+                if (layer.feature) features.push(layer.feature);
+            });
+            
+            // Fusión de jurisdicciones si los metadatos fna coinciden con la asignación
+            try {
+                let poligonosCollection = turf.featureCollection(features);
+                let fusionados = turf.dissolve(poligonosCollection, {propertyName: 'fna'});
+                
+                L.geoJSON(fusionados, {
+                    style: function(feature) {
+                        return { color: '#4A90E2', weight: 1, fillOpacity: 0.1 };
+                    }
+                }).addTo(polygonLayer);
+            } catch (err) {
+                console.warn("KML de Partidos truncado. Mostrando geometría sin fusionar.");
+                e.target.addTo(polygonLayer);
+            }
+        });
+    }
+
+    // Buscador y Filtros
+    document.getElementById('buscador').addEventListener('input', filtrarBases);
+    document.getElementById('filtro-coordinacion').addEventListener('change', filtrarBases);
+
+    function filtrarBases() {
+        const texto = document.getElementById('buscador').value.toLowerCase();
+        const coord = document.getElementById('filtro-coordinacion').value;
+        
+        basesLayer.clearLayers();
+        const listaUI = document.getElementById('lista-bases');
+        listaUI.innerHTML = '';
+
+        basesData.forEach(base => {
+            const coincideTexto = base.name.toLowerCase().includes(texto) || base.desc.toLowerCase().includes(texto);
+            const coincideCoord = coord === "ALL" || base.coordinacion === coord;
+
+            if (coincideTexto && coincideCoord) {
+                basesLayer.addLayer(base.layer);
+                
+                const div = document.createElement('div');
+                div.className = 'base-item';
+                div.innerHTML = `<strong>${base.name}</strong><br><small>${base.coordinacion}</small>`;
+                div.onclick = () => {
+                    map.setView(base.latLng, 14);
+                    base.layer.openPopup();
+                };
+                listaUI.appendChild(div);
+            }
+        });
+    }
+
+    function renderLista() {
+        filtrarBases();
+    }
+
+    inicializarMapa();
+</script>
+</body>
+</html>
