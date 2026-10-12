@@ -1,0 +1,361 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<kml xmlns="http://www.opengis.net/kml/2.2">
+  <Document>
+    <name>45 BASES OPERATIVAS GAD 2026</name>
+    <description>Dirección G.A.D. - 11 Coordinaciones</description>
+
+    <!-- ESTILOS TONOS SUAVES POR COORDINACION -->
+    <Style id="style-norte1">
+      <LineStyle><color>ffE2904A</color><width>2</width></LineStyle>
+      <PolyStyle><color>4dE2904A</color><fill>1</fill><outline>1</outline></PolyStyle>
+      <IconStyle><color>ffE2904A</color><scale>1.2</scale>
+        <Icon><href>https://maps.google.com/mapfiles/kml/shapes/placemark_circle.png</href></Icon>
+      </IconStyle>
+    </Style>
+    <Style id="style-norte2">
+      <LineStyle><color>ff9AA626</color><width>2</width></LineStyle>
+      <PolyStyle><color>4d9AA626</color><fill>1</fill><outline>1</outline></PolyStyle>
+      <IconStyle><color>ff9AA626</color><scale>1.2</scale>
+        <Icon><href>https://maps.google.com/mapfiles/kml/shapes/placemark_circle.png</href></Icon>
+      </IconStyle>
+    </Style>
+    <Style id="style-oeste">
+      <LineStyle><color>ff008CFB</color><width>2</width></LineStyle>
+      <PolyStyle><color>4d008CFB</color><fill>1</fill><outline>1</outline></PolyStyle>
+      <IconStyle><color>ff008CFB</color><scale>1.2</scale>
+        <Icon><href>https://maps.google.com/mapfiles/kml/shapes/placemark_circle.png</href></Icon>
+      </IconStyle>
+    </Style>
+    <Style id="style-sur1">
+      <LineStyle><color>ff3539E5</color><width>2</width></LineStyle>
+      <PolyStyle><color>4d3539E5</color><fill>1</fill><outline>1</outline></PolyStyle>
+      <IconStyle><color>ff3539E5</color><scale>1.2</scale>
+        <Icon><href>https://maps.google.com/mapfiles/kml/shapes/placemark_circle.png</href></Icon>
+      </IconStyle>
+    </Style>
+    <Style id="style-sur2">
+      <LineStyle><color>ff601BD8</color><width>2</width></LineStyle>
+      <PolyStyle><color>4d601BD8</color><fill>1</fill><outline>1</outline></PolyStyle>
+      <IconStyle><color>ff601BD8</color><scale>1.2</scale>
+        <Icon><href>https://maps.google.com/mapfiles/kml/shapes/placemark_circle.png</href></Icon>
+      </IconStyle>
+    </Style>
+    <Style id="style-capital">
+      <LineStyle><color>ffAA248E</color><width>2</width></LineStyle>
+      <PolyStyle><color>4dAA248E</color><fill>1</fill><outline>1</outline></PolyStyle>
+      <IconStyle><color>ffAA248E</color><scale>1.2</scale>
+        <Icon><href>https://maps.google.com/mapfiles/kml/shapes/placemark_circle.png</href></Icon>
+      </IconStyle>
+    </Style>
+    <Style id="style-atlantica">
+      <LineStyle><color>ffE5881E</color><width>2</width></LineStyle>
+      <PolyStyle><color>4dE5881E</color><fill>1</fill><outline>1</outline></PolyStyle>
+      <IconStyle><color>ffE5881E</color><scale>1.2</scale>
+        <Icon><href>https://maps.google.com/mapfiles/kml/shapes/placemark_circle.png</href></Icon>
+      </IconStyle>
+    </Style>
+    <Style id="style-int-sur">
+      <LineStyle><color>ff42B37C</color><width>2</width></LineStyle>
+      <PolyStyle><color>4d42B37C</color><fill>1</fill><outline>1</outline></PolyStyle>
+      <IconStyle><color>ff42B37C</color><scale>1.2</scale>
+        <Icon><href>https://maps.google.com/mapfiles/kml/shapes/placemark_circle.png</href></Icon>
+      </IconStyle>
+    </Style>
+    <Style id="style-int-centro">
+      <LineStyle><color>ff35D8FD</color><width>2</width></LineStyle>
+      <PolyStyle><color>4d35D8FD</color><fill>1</fill><outline>1</outline></PolyStyle>
+      <IconStyle><color>ff35D8FD</color><scale>1.2</scale>
+        <Icon><href>https://maps.google.com/mapfiles/kml/shapes/placemark_circle.png</href></Icon>
+      </IconStyle>
+    </Style>
+    <Style id="style-int-norte1">
+      <LineStyle><color>ff47A043</color><width>2</width></LineStyle>
+      <PolyStyle><color>4d47A043</color><fill>1</fill><outline>1</outline></PolyStyle>
+      <IconStyle><color>ff47A043</color><scale>1.2</scale>
+        <Icon><href>https://maps.google.com/mapfiles/kml/shapes/placemark_circle.png</href></Icon>
+      </IconStyle>
+    </Style>
+    <Style id="style-int-norte2">
+      <LineStyle><color>ff7B8900</color><width>2</width></LineStyle>
+      <PolyStyle><color>4d7B8900</color><fill>1</fill><outline>1</outline></PolyStyle>
+      <IconStyle><color>ff7B8900</color><scale>1.2</scale>
+        <Icon><href>https://maps.google.com/mapfiles/kml/shapes/placemark_circle.png</href></Icon>
+      </IconStyle>
+    </Style>
+
+    <Folder>
+      <name>Bases Operativas GAD</name>
+
+      <Placemark>
+        <name>1. GAD ESCOBAR</name>
+        <description><![CDATA[<b>Coordinación:</b> AMBA NORTE I<br><b>Titular:</b> SUBCOMISARIO LUCAS MEDINA<br><b>Contacto:</b> 11-2162-1957<br><b>Dirección:</b> ING. PABLO MARIN Y COLEC OESTE RAMAL PILAR<br><b>Partido:</b> ESCOBAR<br><b>Localidad:</b> FONAVI (GARIN)]]></description>
+        <styleUrl>#style-norte1</styleUrl>
+        <Point><coordinates>-58.736353,-34.4530154,0</coordinates></Point>
+      </Placemark>
+      <Placemark>
+        <name>2. GAD ZARATE CAMPANA</name>
+        <description><![CDATA[<b>Coordinación:</b> AMBA NORTE I<br><b>Titular:</b> OFICIAL PRINCIPAL JULIO ROCHELLE<br><b>Contacto:</b> 11-2188-4825<br><b>Dirección:</b> COLEC SUR Y QUIROGA CAMPANA<br><b>Partido:</b> CAMPANA<br><b>Localidad:</b> CAMPANA]]></description>
+        <styleUrl>#style-norte1</styleUrl>
+        <Point><coordinates>-58.9940727,-34.1546499,0</coordinates></Point>
+      </Placemark>
+      <Placemark>
+        <name>3. GAD PILAR</name>
+        <description><![CDATA[<b>Coordinación:</b> AMBA NORTE I<br><b>Titular:</b> SUBCOMISARIO YAMIL VERA<br><b>Contacto:</b> 11-3853-9176<br><b>Dirección:</b> GRAL. SAVIO 1900 VILLA ROSA<br><b>Partido:</b> PILAR<br><b>Localidad:</b> VILLA ROSA]]></description>
+        <styleUrl>#style-norte1</styleUrl>
+        <Point><coordinates>-58.9057914,-34.4214632,0</coordinates></Point>
+      </Placemark>
+      <Placemark>
+        <name>4. GAD CONURBANO NORTE</name>
+        <description><![CDATA[<b>Coordinación:</b> AMBA NORTE II<br><b>Titular:</b> OFICIAL PRINCIPAL VICTOR GONZALEZ<br><b>Contacto:</b> 11-6757-9884<br><b>Dirección:</b> ITALIA 1604<br><b>Partido:</b> VICENTE LOPEZ<br><b>Localidad:</b> FLORIDA]]></description>
+        <styleUrl>#style-norte2</styleUrl>
+        <Point><coordinates>-58.4876792,-34.5206124,0</coordinates></Point>
+      </Placemark>
+      <Placemark>
+        <name>5. GAD SAN MARTIN</name>
+        <description><![CDATA[<b>Coordinación:</b> AMBA NORTE II<br><b>Titular:</b> SUBCOMISARIO LUCAS ROSI<br><b>Contacto:</b> 11-3458-0909<br><b>Dirección:</b> MARIA SILVA 4345<br><b>Partido:</b> SAN MARTIN<br><b>Localidad:</b> VILLA BALLESTER]]></description>
+        <styleUrl>#style-norte2</styleUrl>
+        <Point><coordinates>-58.5432871,-34.5459135,0</coordinates></Point>
+      </Placemark>
+      <Placemark>
+        <name>6. GAD TRES DE FEBRERO</name>
+        <description><![CDATA[<b>Coordinación:</b> AMBA NORTE II<br><b>Titular:</b> COMISARIO GABRIEL DOMINICI<br><b>Contacto:</b> 11-5882-1977<br><b>Dirección:</b> AV GRAL SAN MARTIN 1654/56<br><b>Partido:</b> TRES DE FEBRERO<br><b>Localidad:</b> CASEROS]]></description>
+        <styleUrl>#style-norte2</styleUrl>
+        <Point><coordinates>-58.5613922,-34.5972147,0</coordinates></Point>
+      </Placemark>
+      <Placemark>
+        <name>7. GAD LA MATANZA</name>
+        <description><![CDATA[<b>Coordinación:</b> AMBA OESTE<br><b>Titular:</b> SUBCOMISARIO JORGE SOSA<br><b>Contacto:</b> 11-2160-9686<br><b>Dirección:</b> HUMAITA 1446<br><b>Partido:</b> LA MATANZA<br><b>Localidad:</b> TAPIALES]]></description>
+        <styleUrl>#style-oeste</styleUrl>
+        <Point><coordinates>-58.5068167,-34.6989324,0</coordinates></Point>
+      </Placemark>
+      <Placemark>
+        <name>8. GAD MORON</name>
+        <description><![CDATA[<b>Coordinación:</b> AMBA OESTE<br><b>Titular:</b> COMISARIO INSPECTOR MARIANO RANSONE<br><b>Contacto:</b> 11-3767-2488<br><b>Dirección:</b> CHACABUCO 326<br><b>Partido:</b> MORON<br><b>Localidad:</b> HAEDO]]></description>
+        <styleUrl>#style-oeste</styleUrl>
+        <Point><coordinates>-58.5865487,-34.6472952,0</coordinates></Point>
+      </Placemark>
+      <Placemark>
+        <name>9. GAD MORENO</name>
+        <description><![CDATA[<b>Coordinación:</b> AMBA OESTE<br><b>Titular:</b> COMISARIO RUBEN BARBERO<br><b>Contacto:</b> 234-251-6768<br><b>Dirección:</b> PADRE FAHY Y SAN LUIS<br><b>Partido:</b> MORENO<br><b>Localidad:</b> LA REJA]]></description>
+        <styleUrl>#style-oeste</styleUrl>
+        <Point><coordinates>-58.8246449,-34.6640279,0</coordinates></Point>
+      </Placemark>
+      <Placemark>
+        <name>10. GAD MERLO</name>
+        <description><![CDATA[<b>Coordinación:</b> AMBA OESTE<br><b>Titular:</b> SUBCOMISARIO DIEGO DEL FABRO<br><b>Contacto:</b> 11-5014-7741<br><b>Dirección:</b> PATAGONES Y GARAY S/N<br><b>Partido:</b> MERLO<br><b>Localidad:</b> MERLO NORTE]]></description>
+        <styleUrl>#style-oeste</styleUrl>
+        <Point><coordinates>-58.7358866,-34.6610333,0</coordinates></Point>
+      </Placemark>
+      <Placemark>
+        <name>11. GAD QUILMES</name>
+        <description><![CDATA[<b>Coordinación:</b> AMBA SUR I<br><b>Titular:</b> SUBCOMISARIO ANGEL KERK<br><b>Contacto:</b> 11-2772-1076<br><b>Dirección:</b> CMNO GRAL BELGRANO ESQ AV MOSCONI<br><b>Partido:</b> QUILMES<br><b>Localidad:</b> SAN FRANCISCO SOLANO]]></description>
+        <styleUrl>#style-sur1</styleUrl>
+        <Point><coordinates>-58.2825719,-34.7708305,0</coordinates></Point>
+      </Placemark>
+      <Placemark>
+        <name>12. GAD AVELLANEDA</name>
+        <description><![CDATA[<b>Coordinación:</b> AMBA SUR I<br><b>Titular:</b> SUBCOMISARIO JOSE PIERI<br><b>Contacto:</b> 11-3030-0077<br><b>Dirección:</b> FABIAN ONZARI 1820<br><b>Partido:</b> AVELLANEDA<br><b>Localidad:</b> WILDE]]></description>
+        <styleUrl>#style-sur1</styleUrl>
+        <Point><coordinates>-58.334685,-34.7197355,0</coordinates></Point>
+      </Placemark>
+      <Placemark>
+        <name>13. GAD LANUS</name>
+        <description><![CDATA[<b>Coordinación:</b> AMBA SUR I<br><b>Titular:</b> SUBCOMISARIO HUGO ALFONSO<br><b>Contacto:</b> 11-2873-5121<br><b>Dirección:</b> OLAZABAL 5100 LANÚS OESTE<br><b>Partido:</b> LANUS<br><b>Localidad:</b> VILLA CARAZA]]></description>
+        <styleUrl>#style-sur1</styleUrl>
+        <Point><coordinates>-58.4357409,-34.6915471,0</coordinates></Point>
+      </Placemark>
+      <Placemark>
+        <name>14. GAD ALTE. BROWN</name>
+        <description><![CDATA[<b>Coordinación:</b> AMBA SUR II<br><b>Titular:</b> OFICIAL PRINCIPAL LUIS GALEANO<br><b>Contacto:</b> 11-2560-7151<br><b>Dirección:</b> RAMON CASTILLO 3065<br><b>Partido:</b> ALMIRANTE BROWN<br><b>Localidad:</b> GLEW]]></description>
+        <styleUrl>#style-sur2</styleUrl>
+        <Point><coordinates>-58.4044649,-34.816461,0</coordinates></Point>
+      </Placemark>
+      <Placemark>
+        <name>15. GAD LOMAS DE ZAMORA</name>
+        <description><![CDATA[<b>Coordinación:</b> AMBA SUR II<br><b>Titular:</b> OFICIAL PRINCIPAL FERNANDO RAMOS<br><b>Contacto:</b> 11-3183-3999<br><b>Dirección:</b> GARIBALDI 2200 LLAVALLOL<br><b>Partido:</b> LOMAS DE ZAMORA<br><b>Localidad:</b> LLAVALLOL]]></description>
+        <styleUrl>#style-sur2</styleUrl>
+        <Point><coordinates>-58.4265875,-34.782483,0</coordinates></Point>
+      </Placemark>
+      <Placemark>
+        <name>16. GAD EZEIZA</name>
+        <description><![CDATA[<b>Coordinación:</b> AMBA SUR II<br><b>Titular:</b> OFICIAL PRINCIPAL CRISTIAN BORDON<br><b>Contacto:</b> 11-2492-8716<br><b>Dirección:</b> AV. NESTOR KIRCHNER 463<br><b>Partido:</b> EZEIZA<br><b>Localidad:</b> TRISTAN SUAREZ]]></description>
+        <styleUrl>#style-sur2</styleUrl>
+        <Point><coordinates>-58.5744078,-34.9043744,0</coordinates></Point>
+      </Placemark>
+      <Placemark>
+        <name>17. GAD SAN VICENTE</name>
+        <description><![CDATA[<b>Coordinación:</b> REGION CAPITAL<br><b>Titular:</b> OFICIAL PRINCIPAL ROBERTO PEDERNERA<br><b>Contacto:</b> 222-648-6862<br><b>Dirección:</b> REIMER ESQ. LIBERTAD<br><b>Partido:</b> CAÑUELAS<br><b>Localidad:</b> CAÑUELAS]]></description>
+        <styleUrl>#style-capital</styleUrl>
+        <Point><coordinates>-58.7697641,-35.047003,0</coordinates></Point>
+      </Placemark>
+      <Placemark>
+        <name>18. GAD LA PLATA</name>
+        <description><![CDATA[<b>Coordinación:</b> REGION CAPITAL<br><b>Titular:</b> COMISARIO INSPECTOR MARCOS SAYAVEDRA<br><b>Contacto:</b> 221-680-5796<br><b>Dirección:</b> 157 E/510 Y 511<br><b>Partido:</b> LA PLATA<br><b>Localidad:</b> MELCHOR ROMERO]]></description>
+        <styleUrl>#style-capital</styleUrl>
+        <Point><coordinates>-58.0446262,-34.9300841,0</coordinates></Point>
+      </Placemark>
+      <Placemark>
+        <name>19. GAD ENSENADA</name>
+        <description><![CDATA[<b>Coordinación:</b> REGION CAPITAL<br><b>Titular:</b> SUBCOMISARIO MIGUEL NUÑEZ<br><b>Contacto:</b> 221-63-5787<br><b>Dirección:</b> PJE B. IRIGOYEN E/ BOLIVIA Y URUGUAY<br><b>Partido:</b> ENSENADA<br><b>Localidad:</b> ENSENADA]]></description>
+        <styleUrl>#style-capital</styleUrl>
+        <Point><coordinates>-57.9165967,-34.8589392,0</coordinates></Point>
+      </Placemark>
+      <Placemark>
+        <name>20. GAD PTE. PERON</name>
+        <description><![CDATA[<b>Coordinación:</b> REGION CAPITAL<br><b>Titular:</b> SUBCOMISARIO EMMANUEL SUAREZ<br><b>Contacto:</b> 222-453-5352<br><b>Dirección:</b> RTA. PROVINCIAL 210 Y LAS AMERICAS<br><b>Partido:</b> PRESIDENTE PERON<br><b>Localidad:</b> GUERNICA]]></description>
+        <styleUrl>#style-capital</styleUrl>
+        <Point><coordinates>-58.3802658,-34.9272347,0</coordinates></Point>
+      </Placemark>
+      <Placemark>
+        <name>21. GAD MAR DEL PLATA</name>
+        <description><![CDATA[<b>Coordinación:</b> REGION ATLANTICA<br><b>Titular:</b> COMISARIO LEANDRO LOPEZ<br><b>Contacto:</b> 222-762-0510<br><b>Dirección:</b> TUCUMAN N° 4102<br><b>Partido:</b> GRAL. PUEYRREDON<br><b>Localidad:</b> MAR DEL PLATA]]></description>
+        <styleUrl>#style-atlantica</styleUrl>
+        <Point><coordinates>-57.5563382,-38.0216627,0</coordinates></Point>
+      </Placemark>
+      <Placemark>
+        <name>22. GAD LA COSTA</name>
+        <description><![CDATA[<b>Coordinación:</b> REGION ATLANTICA<br><b>Titular:</b> SUBCOMISARIO JUAN GALVAN<br><b>Contacto:</b> 223-518-2249<br><b>Dirección:</b> CALLE 1 E/25 Y 26<br><b>Partido:</b> LA COSTA<br><b>Localidad:</b> LAS TONINAS]]></description>
+        <styleUrl>#style-atlantica</styleUrl>
+        <Point><coordinates>-56.6934727,-36.4875504,0</coordinates></Point>
+      </Placemark>
+      <Placemark>
+        <name>23. GAD CHASCOMUS</name>
+        <description><![CDATA[<b>Coordinación:</b> REGION ATLANTICA<br><b>Titular:</b> OFICIAL PRINCIPAL NESTOR VAZQUEZ<br><b>Contacto:</b> 226-258-9266<br><b>Dirección:</b> ARENALES NRO. 278<br><b>Partido:</b> CHASCOMUS<br><b>Localidad:</b> CHASCOMUS]]></description>
+        <styleUrl>#style-atlantica</styleUrl>
+        <Point><coordinates>-58.0150655,-35.5766146,0</coordinates></Point>
+      </Placemark>
+      <Placemark>
+        <name>24. GAD PINAMAR-VILLA GESELL</name>
+        <description><![CDATA[<b>Coordinación:</b> REGION ATLANTICA<br><b>Titular:</b> OFICIAL SUBINSPECTOR JUAN ALLO<br><b>Contacto:</b> 226-740-7540<br><b>Dirección:</b> AV. GRAL JUAN MADARIAGA Y RUTA PROV. 11<br><b>Partido:</b> VILLA GESELL<br><b>Localidad:</b> VILLA GESELL]]></description>
+        <styleUrl>#style-atlantica</styleUrl>
+        <Point><coordinates>-57.0093396,-37.2800089,0</coordinates></Point>
+      </Placemark>
+      <Placemark>
+        <name>25. GAD DOLORES</name>
+        <description><![CDATA[<b>Coordinación:</b> REGION ATLANTICA<br><b>Titular:</b> SUBCOMISARIO PABLO CORONEL<br><b>Contacto:</b> 224-550-3689<br><b>Dirección:</b> PILLADO N°100 Y ESTEBAN FACIO<br><b>Partido:</b> DOLORES<br><b>Localidad:</b> DOLORES]]></description>
+        <styleUrl>#style-atlantica</styleUrl>
+        <Point><coordinates>-57.6863353,-36.3019249,0</coordinates></Point>
+      </Placemark>
+      <Placemark>
+        <name>26. GAD BAHIA BLANCA</name>
+        <description><![CDATA[<b>Coordinación:</b> REGION INTERIOR SUR<br><b>Titular:</b> SUBCOMISARIO MIGUEL OVIEDO<br><b>Contacto:</b> 291-468-2375<br><b>Dirección:</b> AV. LEANDRO ALEM NRO. 836<br><b>Partido:</b> BAHIA BLANCA<br><b>Localidad:</b> BAHIA BLANCA]]></description>
+        <styleUrl>#style-int-sur</styleUrl>
+        <Point><coordinates>-62.2667925,-38.7062813,0</coordinates></Point>
+      </Placemark>
+      <Placemark>
+        <name>27. GAD GUAMINI</name>
+        <description><![CDATA[<b>Coordinación:</b> REGION INTERIOR SUR<br><b>Titular:</b> COMISARIO PABLO ORTEGA<br><b>Contacto:</b> 239-244-3349<br><b>Dirección:</b> FREYRE N° 280<br><b>Partido:</b> GUAMINI<br><b>Localidad:</b> GUAMINI]]></description>
+        <styleUrl>#style-int-sur</styleUrl>
+        <Point><coordinates>-62.4971767,-36.7558351,0</coordinates></Point>
+      </Placemark>
+      <Placemark>
+        <name>28. GAD NECOCHEA</name>
+        <description><![CDATA[<b>Coordinación:</b> REGION INTERIOR SUR<br><b>Titular:</b> COMISARIO EMILIANO BOGJA<br><b>Contacto:</b> 223-456-4569<br><b>Dirección:</b> AV 10 Y 123<br><b>Partido:</b> NECOCHEA<br><b>Localidad:</b> NECOCHEA]]></description>
+        <styleUrl>#style-int-sur</styleUrl>
+        <Point><coordinates>-58.757714,-38.5881153,0</coordinates></Point>
+      </Placemark>
+      <Placemark>
+        <name>29. GAD GRAL. ALVEAR</name>
+        <description><![CDATA[<b>Coordinación:</b> REGION INTERIOR CENTRO<br><b>Titular:</b> COMISARIO INSPECTOR FELIX VILLAVERDE<br><b>Contacto:</b> 234-440-8058<br><b>Dirección:</b> CARLOS PELLEGRINI 1237<br><b>Partido:</b> GRAL. ALVEAR<br><b>Localidad:</b> GRAL. ALVEAR]]></description>
+        <styleUrl>#style-int-centro</styleUrl>
+        <Point><coordinates>-60.0176878,-36.025039,0</coordinates></Point>
+      </Placemark>
+      <Placemark>
+        <name>30. GAD AZUL/ OLAVARRIA</name>
+        <description><![CDATA[<b>Coordinación:</b> REGION INTERIOR CENTRO<br><b>Titular:</b> SUBCRIO. CARLOS LUCIO<br><b>Contacto:</b> 249-433-9353<br><b>Dirección:</b> RIVADAVIA 5256<br><b>Partido:</b> OLAVARRIA<br><b>Localidad:</b> OLAVARRIA]]></description>
+        <styleUrl>#style-int-centro</styleUrl>
+        <Point><coordinates>-60.2875284,-36.8941814,0</coordinates></Point>
+      </Placemark>
+      <Placemark>
+        <name>31. GAD 25 DE MAYO</name>
+        <description><![CDATA[<b>Coordinación:</b> REGION INTERIOR CENTRO<br><b>Titular:</b> COMISARIO DARIO BARRO<br><b>Contacto:</b> 11-6305-2508<br><b>Dirección:</b> CALLE 10 NRO 3296<br><b>Partido:</b> 25 DE MAYO<br><b>Localidad:</b> 25 DE MAYO]]></description>
+        <styleUrl>#style-int-centro</styleUrl>
+        <Point><coordinates>-60.1740539,-35.4450695,0</coordinates></Point>
+      </Placemark>
+      <Placemark>
+        <name>32. GAD TANDIL</name>
+        <description><![CDATA[<b>Coordinación:</b> REGION INTERIOR CENTRO<br><b>Titular:</b> SUBCOMISARIO CLARA GARNICA<br><b>Contacto:</b> 249-424-0792<br><b>Dirección:</b> PELLEGRINI 1139<br><b>Partido:</b> TANDIL<br><b>Localidad:</b> TANDIL]]></description>
+        <styleUrl>#style-int-centro</styleUrl>
+        <Point><coordinates>-59.1479404,-37.320593,0</coordinates></Point>
+      </Placemark>
+      <Placemark>
+        <name>33. GAD CHIVILCOY</name>
+        <description><![CDATA[<b>Coordinación:</b> REGION INTERIOR NORTE I<br><b>Titular:</b> COMISARIO INSPECTOR JULIO COMEZAÑA<br><b>Contacto:</b> 234-660-6162<br><b>Dirección:</b> BERNARDO DE IRIGOYEN 481 Y AV. URQUIZA<br><b>Partido:</b> CHIVILCOY<br><b>Localidad:</b> CHIVILCOY]]></description>
+        <styleUrl>#style-int-norte1</styleUrl>
+        <Point><coordinates>-60.0194749,-34.8850094,0</coordinates></Point>
+      </Placemark>
+      <Placemark>
+        <name>34. GAD MERCEDES</name>
+        <description><![CDATA[<b>Coordinación:</b> REGION INTERIOR NORTE I<br><b>Titular:</b> OFICIAL PRINCIPAL ANDREA GRATONE<br><b>Contacto:</b> 212-367-4193<br><b>Dirección:</b> CALLE 37 E/20 Y 22<br><b>Partido:</b> MERCEDES<br><b>Localidad:</b> MERCEDES]]></description>
+        <styleUrl>#style-int-norte1</styleUrl>
+        <Point><coordinates>-59.4365846,-34.6514548,0</coordinates></Point>
+      </Placemark>
+      <Placemark>
+        <name>35. GAD PERGAMINO</name>
+        <description><![CDATA[<b>Coordinación:</b> REGION INTERIOR NORTE I<br><b>Titular:</b> OFICIAL AYUDANTE CHRISTIAN RUBIO<br><b>Contacto:</b> 236-469-2210<br><b>Dirección:</b> AV. VENINI S/N Y CALLE 2<br><b>Partido:</b> PERGAMINO<br><b>Localidad:</b> PERGAMINO]]></description>
+        <styleUrl>#style-int-norte1</styleUrl>
+        <Point><coordinates>-60.550186,-33.8942346,0</coordinates></Point>
+      </Placemark>
+      <Placemark>
+        <name>36. GAD EXALTACION DE LA CRUZ</name>
+        <description><![CDATA[<b>Coordinación:</b> REGION INTERIOR NORTE I<br><b>Titular:</b> SUBCOMISARIO ANDREA RODIO<br><b>Contacto:</b> 11-6434-6447<br><b>Dirección:</b> RUTA PROV 193 KM 21<br><b>Partido:</b> EXALTACION DE LA CRUZ<br><b>Localidad:</b> CAPILLA DEL SEÑOR]]></description>
+        <styleUrl>#style-int-norte1</styleUrl>
+        <Point><coordinates>-59.094288,-34.2939946,0</coordinates></Point>
+      </Placemark>
+      <Placemark>
+        <name>37. GAD SAN NICOLAS</name>
+        <description><![CDATA[<b>Coordinación:</b> REGION INTERIOR NORTE I<br><b>Titular:</b> SUBCOMISARIO CLAUDIO BARBOZA DURAN<br><b>Contacto:</b> 336-454-4801<br><b>Dirección:</b> PASEO RIBEREÑO Y CAMALOTES<br><b>Partido:</b> SAN NICOLAS<br><b>Localidad:</b> RAMALLO]]></description>
+        <styleUrl>#style-int-norte1</styleUrl>
+        <Point><coordinates>-60.2270022,-33.3433442,0</coordinates></Point>
+      </Placemark>
+      <Placemark>
+        <name>38. GAD SAN PEDRO</name>
+        <description><![CDATA[<b>Coordinación:</b> REGION INTERIOR NORTE I<br><b>Titular:</b> OFICIAL PRINCIPAL DIEGO BENAVIDEZ<br><b>Contacto:</b> 247-721-0525<br><b>Dirección:</b> HONORIO PUEYRREDON N°135<br><b>Partido:</b> SAN PEDRO<br><b>Localidad:</b> SAN PEDRO]]></description>
+        <styleUrl>#style-int-norte1</styleUrl>
+        <Point><coordinates>-59.6670234,-33.6818308,0</coordinates></Point>
+      </Placemark>
+      <Placemark>
+        <name>39. GAD JUNIN</name>
+        <description><![CDATA[<b>Coordinación:</b> REGION INTERIOR NORTE I<br><b>Titular:</b> SUBCOMISARIO CARLOS COTRONEO<br><b>Contacto:</b> 236-431-1358<br><b>Dirección:</b> AVELLANEDA 1749 Y LOS CEDROS<br><b>Partido:</b> JUNIN<br><b>Localidad:</b> JUNIN]]></description>
+        <styleUrl>#style-int-norte1</styleUrl>
+        <Point><coordinates>-60.9748651,-34.6148644,0</coordinates></Point>
+      </Placemark>
+      <Placemark>
+        <name>40. GAD SALTO</name>
+        <description><![CDATA[<b>Coordinación:</b> REGION INTERIOR NORTE I<br><b>Titular:</b> OFICIAL PRINCIPAL PABLO NIEVA<br><b>Contacto:</b> 11-6112-8049<br><b>Dirección:</b> AV. VALENTIN VERGARA N° 400<br><b>Partido:</b> SALTO<br><b>Localidad:</b> SALTO]]></description>
+        <styleUrl>#style-int-norte1</styleUrl>
+        <Point><coordinates>-60.2600372,-34.2887615,0</coordinates></Point>
+      </Placemark>
+      <Placemark>
+        <name>41. GAD CHACABUCO</name>
+        <description><![CDATA[<b>Coordinación:</b> REGION INTERIOR NORTE I<br><b>Titular:</b> OFICIAL AYUDANTE ANDRES GARCIA<br><b>Contacto:</b> 236-426-2224<br><b>Dirección:</b> BERNARDO DE IRIGOYEN 287<br><b>Partido:</b> CHACABUCO<br><b>Localidad:</b> CHACABUCO]]></description>
+        <styleUrl>#style-int-norte1</styleUrl>
+        <Point><coordinates>-60.4705,-34.6432,0</coordinates></Point>
+      </Placemark>
+      <Placemark>
+        <name>42. GAD LINCOLN</name>
+        <description><![CDATA[<b>Coordinación:</b> REGION INTERIOR NORTE II<br><b>Titular:</b> OFICIAL AYUDANTE ELIAS MENDIETA<br><b>Contacto:</b> 236-431-6620<br><b>Dirección:</b> ITUZAINGO Y TUPAC AMARU<br><b>Partido:</b> LINCOLN<br><b>Localidad:</b> LINCOLN]]></description>
+        <styleUrl>#style-int-norte2</styleUrl>
+        <Point><coordinates>-61.5391731,-34.8549406,0</coordinates></Point>
+      </Placemark>
+      <Placemark>
+        <name>43. GAD 9 DE JULIO/ BRAGADO</name>
+        <description><![CDATA[<b>Coordinación:</b> REGION INTERIOR NORTE II<br><b>Titular:</b> OFICIAL PRINCIPAL LUIS VARGAS<br><b>Contacto:</b> 234-645-5423<br><b>Dirección:</b> CALLE DE BUSTO Y JUNCAL<br><b>Partido:</b> BRAGADO<br><b>Localidad:</b> BRAGADO]]></description>
+        <styleUrl>#style-int-norte2</styleUrl>
+        <Point><coordinates>-60.4922053,-35.116907,0</coordinates></Point>
+      </Placemark>
+      <Placemark>
+        <name>44. GAD TRENQUE LAUQUEN</name>
+        <description><![CDATA[<b>Coordinación:</b> REGION INTERIOR NORTE II<br><b>Titular:</b> OFICIAL PRINCIPAL MIGUEL GALDOS<br><b>Contacto:</b> 235-741-2418<br><b>Dirección:</b> SCALESE 1480<br><b>Partido:</b> TRENQUE LAUQUEN<br><b>Localidad:</b> TRENQUE LAUQUEN]]></description>
+        <styleUrl>#style-int-norte2</styleUrl>
+        <Point><coordinates>-62.7090611,-35.9706382,0</coordinates></Point>
+      </Placemark>
+      <Placemark>
+        <name>45. GAD PEHUAJO</name>
+        <description><![CDATA[<b>Coordinación:</b> REGION INTERIOR NORTE II<br><b>Titular:</b> COMISARIO ALBERTO JAIME<br><b>Contacto:</b> 239-660-4112<br><b>Dirección:</b> AV SAN MARTÍN Y PASTOR IBAÑEZ<br><b>Partido:</b> PEHUAJO<br><b>Localidad:</b> PEHUAJO]]></description>
+        <styleUrl>#style-int-norte2</styleUrl>
+        <Point><coordinates>-61.878438,-35.8362366,0</coordinates></Point>
+      </Placemark>
+    </Folder>
+  </Document>
+</kml>
