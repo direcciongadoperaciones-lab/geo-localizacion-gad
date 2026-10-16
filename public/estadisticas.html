@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GAD Operaciones - ESTADÍSTICAS</title>
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body { margin: 0; padding: 0; background-color: #111; color: #fff; font-family: Arial, sans-serif; }
+        .header { background: #000; border-bottom: 2px solid #D4AF37; padding: 15px; display: flex; justify-content: space-between; align-items: center; }
+        .header h1 { color: #D4AF37; margin: 0; font-size: 24px; }
+        .btn-volver { background: #333; color: #fff; padding: 8px 15px; text-decoration: none; border-radius: 5px; }
+
+        .filtros { background: #222; padding: 15px; display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; border-bottom: 1px solid #333;}
+        .filtros select, .filtros button { padding: 10px; background: #000; color: #D4AF37; border: 1px solid #D4AF37; border-radius: 5px; }
+        
+        .dashboard { display: flex; flex-wrap: wrap; padding: 20px; gap: 20px; justify-content: center; }
+        .chart-container { background: #1a1a1a; padding: 20px; border-radius: 10px; border: 1px solid #333; width: 400px; max-width: 100%; text-align: center; }
+        
+        .tabla-datos { width: 90%; margin: 20px auto; border-collapse: collapse; background: #1a1a1a; }
+        .tabla-datos th { background: #D4AF37; color: #000; padding: 10px; }
+        .tabla-datos td { padding: 10px; border-bottom: 1px solid #333; text-align: center; }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>D.G.A.D.O - ESTADÍSTICAS</h1>
+        <a href="superadmin.html" class="btn-volver">◀ Volver al Mapa</a>
+    </div>
+
+    <div class="filtros">
+        <select><option>Mes Actual</option><option>Mes Pasado</option></select>
+        <select><option>Todas las Bases</option><option>Norte 1</option></select>
+        <select><option>Todos los Servicios</option><option>Allanamientos</option></select>
+        <button>Filtrar</button>
+        <button style="background: #28a745; color: white; border: none;">Exportar CSV</button>
+    </div>
+
+    <div class="dashboard">
+        <!-- Gráfico Torta -->
+        <div class="chart-container">
+            <h3 style="color:#D4AF37; margin-top:0;">Tipos de Servicio</h3>
+            <canvas id="tortaServicios"></canvas>
+        </div>
+        
+        <!-- Gráfico Barras -->
+        <div class="chart-container">
+            <h3 style="color:#D4AF37; margin-top:0;">Top Bases (Rendimiento)</h3>
+            <canvas id="barrasBases"></canvas>
+        </div>
+    </div>
+
+    <table class="tabla-datos">
+        <thead>
+            <tr>
+                <th>Base</th>
+                <th>Servicios Mes</th>
+                <th>Efectividad</th>
+                <th>Contacto</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>GAD LA MATANZA</td>
+                <td>14</td>
+                <td>Alta</td>
+                <td><a href="#" style="color:#28a745;">11 3789-9515</a></td>
+            </tr>
+        </tbody>
+    </table>
+
+    <script>
+        // Inicializar Gráficos de Ejemplo
+        const ctxTorta = document.getElementById('tortaServicios').getContext('2d');
+        new Chart(ctxTorta, {
+            type: 'pie',
+            data: {
+                labels: ['Allanamientos', 'Prevención', 'Manifestación'],
+                datasets: [{
+                    data: [50, 30, 20],
+                    backgroundColor: ['#dc3545', '#28a745', '#ffc107'],
+                    borderColor: '#111'
+                }]
+            },
+            options: { color: '#fff' }
+        });
+
+        const ctxBarras = document.getElementById('barrasBases').getContext('2d');
+        new Chart(ctxBarras, {
+            type: 'bar',
+            data: {
+                labels: ['Matanza', 'San Martin', 'Morón'],
+                datasets: [{
+                    label: 'Operativos Totales',
+                    data: [14, 10, 8],
+                    backgroundColor: '#D4AF37'
+                }]
+            },
+            options: { scales: { y: { beginAtZero: true, grid: { color: '#333' } }, x: { grid: { color: '#333' } } }, color: '#fff' }
+        });
+    </script>
+
+    <!-- SCRIPT DE AUTO-UPDATE -->
+    <script>
+      let currentAppVersion = null;
+      function checkVersion() {
+        fetch('/version.json?t=' + new Date().getTime())
+          .then(response => response.json())
+          .then(data => {
+            if (!currentAppVersion) {
+              currentAppVersion = data.version;
+            } else if (currentAppVersion !== data.version) {
+              console.log("Nueva versión detectada. Actualizando...");
+              location.reload(true);
+            }
+          }).catch(err => console.error("Error versión:", err));
+      }
+      setInterval(checkVersion, 15000);
+    </script>
+</body>
+</html>

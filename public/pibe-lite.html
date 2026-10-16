@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GAD Operaciones - LITE</title>
+    <style>
+        body { background-color: #111; color: #fff; font-family: Arial, sans-serif; text-align: center; margin: 0; padding: 0;}
+        .header { background: #000; border-bottom: 2px solid #D4AF37; padding: 15px; }
+        .header h1 { color: #D4AF37; margin: 0; font-size: 24px; }
+        .card { background: #222; border-radius: 15px; padding: 20px; margin: 20px; border: 1px solid #333; }
+        .btn-estado { padding: 15px 30px; font-size: 18px; font-weight: bold; border-radius: 8px; border: none; width: 100%; margin-top: 10px; color: #000; cursor: pointer;}
+        .verde { background-color: #28a745; }
+        .rojo { background-color: #dc3545; color: white;}
+        .alerta { color: #D4AF37; font-weight: bold; margin-top: 15px;}
+        .form-group { margin-top: 15px; text-align: left;}
+        .form-group label { display: block; color: #D4AF37; margin-bottom: 5px; font-size: 14px;}
+        .form-group input, .form-group select { width: 100%; padding: 10px; border-radius: 5px; border: 1px solid #555; background: #333; color: white; box-sizing: border-box;}
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>D.G.A.D.O - MODO AHORRO</h1>
+    </div>
+
+    <div class="card">
+        <h2 id="estadoActual">Estado: LIBRE EN BASE</h2>
+        <p class="alerta">⚠️ MAPA DESACTIVADO PARA AHORRAR BATERÍA</p>
+        <p>La ubicación se reportará automáticamente cada 15 minutos en segundo plano al iniciar servicio.</p>
+        
+        <div class="form-group">
+            <label>Servicio:</label>
+            <input type="text" list="serviciosList" id="servicioInput" placeholder="Ej: ALLANAMIENTO">
+            <datalist id="serviciosList">
+                <option value="ALLANAMIENTO">
+                <option value="MANIFESTACION">
+                <option value="CALABOZO">
+                <option value="OPERATIVO PREVENCION">
+                <option value="CONTROL VEHICULAR">
+                <option value="OTROS">
+            </datalist>
+        </div>
+
+        <button class="btn-estado rojo" onclick="cambiarEstado('ROJO')">INICIAR SERVICIO</button>
+        <button class="btn-estado verde" onclick="cambiarEstado('VERDE')">VOLVER A BASE</button>
+    </div>
+
+    <!-- Firebase y Lógica de GPS -->
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
+    <script>
+        // ACÁ VA TU CONFIGURACIÓN DE FIREBASE (firebaseConfig)
+        
+        let transmisorInterval;
+
+        function iniciarTransmision(baseId, opId) {
+            if(transmisorInterval) clearInterval(transmisorInterval);
+            // Transmite cada 15 min (900000 ms)
+            transmisorInterval = setInterval(() => {
+                if ("geolocation" in navigator) {
+                    navigator.geolocation.getCurrentPosition((pos) => {
+                        const lat = pos.coords.latitude;
+                        const lng = pos.coords.longitude;
+                        console.log("Transmitiendo (LITE):", lat, lng);
+                        // firebase.database().ref(`serviciosActivos/${baseId}/${opId}`).update({ lat, lng, timestamp: Date.now() });
+                    });
+                }
+            }, 900000);
+        }
+
+        function cambiarEstado(estado) {
+            document.getElementById('estadoActual').innerText = "Estado: " + estado;
+            if (estado === 'ROJO') {
+                document.body.style.backgroundColor = "#3a0000"; // Rojo oscuro
+                iniciarTransmision('base_activa', 'op_1');
+            } else {
+                document.body.style.backgroundColor = "#111"; // Vuelve a negro
+                if(transmisorInterval) clearInterval(transmisorInterval); // Apaga el GPS
+            }
+        }
+    </script>
+
+    <!-- SCRIPT DE AUTO-UPDATE -->
+    <script>
+      let currentAppVersion = null;
+      function checkVersion() {
+        fetch('/version.json?t=' + new Date().getTime())
+          .then(response => response.json())
+          .then(data => {
+            if (!currentAppVersion) {
+              currentAppVersion = data.version;
+            } else if (currentAppVersion !== data.version) {
+              console.log("Nueva versión detectada. Actualizando...");
+              location.reload(true);
+            }
+          }).catch(err => console.error("Error versión:", err));
+      }
+      setInterval(checkVersion, 15000);
+    </script>
+</body>
+</html>
