@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>GAD PBA - Operativo (Pibe)</title>
+    
+    <!-- Leaflet CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    
+    <style>
+        /* 4. INTERFAZ Y DISEÑO VISUAL MODERNO */
+        :root {
+            --verde: #2ecc71;
+            --rojo: #e74c3c;
+            --azul: #3498db;
+            --amarillo: #f1c40f;
+            --gris: #95a5a6;
+            --fondo: #f8f9fa;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--fondo);
+            transition: background-color 0.5s ease;
+        }
+
+        body.estado-verde { background-color: #eafaf1; }
+        body.estado-rojo { background-color: #fdedec; }
+        body.estado-amarillo { background-color: #fef9e7; }
+
+        .header {
+            background: white;
+            padding: 15px;
+            text-align: center;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            border-bottom-left-radius: 12px;
+            border-bottom-right-radius: 12px;
+            margin-bottom: 15px;
+        }
+
+        .header img {
+            height: 60px; /* Espacio para el escudo original GAD PBA */
+            object-fit: contain;
+        }
+
+        .header h2 {
+            margin: 5px 0 0 0;
+            font-size: 18px;
+            color: #333;
+        }
+
+        .container {
+            padding: 0 15px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        /* Contenedores con bordes redondeados y sombras suaves */
+        .card {
+            background: white;
+            border-radius: 12px;
+            padding: 15px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+        }
+
+        #map {
+            height: 250px;
+            width: 100%;
+            border-radius: 12px;
+            z-index: 1;
+        }
+
+        /* Botones táctiles optimizados */
+        button {
+            height: 52px;
+            width: 100%;
+            border: none;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: bold;
+            color: white;
+            cursor: pointer;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            transition: transform 0.1s, opacity 0.2s;
+            margin-bottom: 10px;
+        }
+
+        button:active {
+            transform: scale(0.98);
+        }
+
+        .btn-iniciar { background-color: var(--verde); }
+        .btn-whatsapp { background-color: var(--azul); }
+        .btn-volviendo { background-color: var(--amarillo); color: #333; }
+        .btn-finalizar { background-color: var(--rojo); }
+
+        .info-texto {
+            font-size: 14px;
+            color: #555;
+            text-align: center;
+            margin-top: 5px;
+        }
+
+        #distanciaBase {
+            font-weight: bold;
+            color: var(--amarillo);
+        }
+    </style>
+</head>
+<body class="estado-verde">
+
+    <!-- 1. MECANISMO DE AUTO-ACTUALIZACIÓN NATIVA -->
+    <script>
+        function checkVersion() {
+            fetch('version.json?t=' + new Date().getTime()) // Evita el caché
+                .then(response => response.json())
+                .then(data => {
+                    const localVersion = localStorage.getItem('appVersion');
+                    if (!localVersion) {
+                        localStorage.setItem('appVersion', data.version);
+                    } else if (localVersion !== data.version) {
+                        localStorage.setItem('appVersion', data.version);
+                        window.location.reload(true); // Recarga limpia obligatoria
+                    }
+                }).catch(err => console.log('Error verificando versión:', err));
+        }
+        setInterval(checkVersion, 30000); // Verifica cada 30 segundos en background
+        checkVersion();
+    </script>
+
+    <div class="header">
+        <!-- Reemplazar src con la URL real de tu escudo GAD -->
+        <img src="https://via.placeholder.com/150x60/ffffff/000000?text=ESCUDO+GAD+PBA" alt="Escudo GAD PBA">
+        <h2>Panel Operativo</h2>
+        <div class="info-texto" id="statusText">Estado: Disponible</div>
+    </div>
+
+    <div class="container">
+        <div class="card">
+            <div id="map"></div>
+        </div>
+
+        <div class="card" id="controles">
+            <button class="btn-iniciar" id="btnIniciar" onclick="cambiarEstado('rojo')">INICIAR SERVICIO</button>
+            <button class="btn-whatsapp" id="btnWhatsapp" onclick="enviarWhatsapp()">ENVIAR WHATSAPP</button>
+            <button class="btn-volviendo" id="btnVolviendo" onclick="cambiarEstado('amarillo')" style="display:none;">ESTADO: VOLVIENDO</button>
+            <button class="btn-finalizar" id="btnFinalizar" onclick="finalizarServicio()" style="display:none;">FINALIZAR</button>
+            
+            <div class="info-texto" id="infoDistancia" style="display:none;">
+                Distancia a base: <span id="distanciaBase">Calculando...</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Firebase v8 Compat -->
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
+    <!-- Leaflet JS -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+    <script>
+        // 🔴 ATENCIÓN: PEGA TU CONFIGURACIÓN DE FIREBASE AQUÍ 🔴
+        const firebaseConfig = {
+apiKey: "AIzaSyA3wKUK1K-gtxwnizrRn8YCE3LHPH7yn-k",
+  authDomain: "gad-operaciones.firebaseapp.com",
+  projectId: "gad-operaciones",
+  storageBucket: "gad-operaciones.firebasestorage.app",
+  messagingSenderId: "100151993615",
+  appId: "1:100151993615:web:f43215c799a10bc5da0a7a"
+        };
+        
+        if (!firebase.apps.length) {
+            firebase.initializeApp(firebaseConfig);
+        }
+        const db = firebase.database();
+
+        // Variables Globales
+        let map, marker;
+        let watchId = null;
+        let transmisorInterval = null;
+        let estadoActual = 'verde';
+        let miLat = 0, miLng = 0;
+        let pibeId = localStorage.getItem('pibeId') || 'pibe_' + Math.floor(Math.random() * 100000);
+        localStorage.setItem('pibeId', pibeId);
+
+        // Coordenadas de la Base (Ajustar a las reales de la base)
+        const BASE_LAT = -34.6037; 
+        const BASE_LNG = -58.3816;
+
+        // Inicializar Mapa (6. SOLUCIÓN COMPLETA AL MAPA GRIS)
+        function initMap() {
+            map = L.map('map').setView([-34.6037, -58.3816], 13);
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                attribution: '© OpenStreetMap'
+            }).addTo(map);
+
+            // FIX: Redibujado forzado para evitar recuadros grises
+            setTimeout(function(){ 
+                map.invalidateSize(); 
+            }, 500);
+
+            // Listeners globales para redibujado en rotación/resize
+            window.addEventListener('resize', () => map.invalidateSize());
+            window.addEventListener('orientationchange', () => {
+                setTimeout(() => map.invalidateSize(), 300);
+            });
+        }
+
+        initMap();
+
+        // 2. REPARAR EL GPS CONGELADO (Precisión y Transmisión)
+        function iniciarRastreo() {
+            if (navigator.geolocation) {
+                // watchPosition activo con máxima precisión
+                watchId = navigator.geolocation.watchPosition(
+                    (position) => {
+                        miLat = position.coords.latitude;
+                        miLng = position.coords.longitude;
+                        
+                        // Actualizar mapa local
+                        if (!marker) {
+                            marker = L.marker([miLat, miLng]).addTo(map);
+                        } else {
+                            marker.setLatLng([miLat, miLng]);
+                        }
+                        map.setView([miLat, miLng]);
+
+                        // Lógica de Geofencing si está en amarillo
+                        if (estadoActual === 'amarillo') {
+                            verificarDistanciaBase();
+                        }
+                    },
+                    (error) => console.warn('Error GPS:', error),
+                    { enableHighAccuracy: true, maximumAge: 0, timeout: 5000 }
+                );
+
+                // Transmitir a Firebase cada 10 segundos ininterrumpidamente
+                if (!transmisorInterval) {
+                    transmisorInterval = setInterval(() => {
+                        if (miLat !== 0 && estadoActual !== 'verde') {
+                            db.ref('operaciones/' + pibeId).set({
+                                lat: miLat,
+                                lng: miLng,
+                                estado: estadoActual,
+                                timestamp: firebase.database.ServerValue.TIMESTAMP
+                            });
+                        }
+                    }, 10000); // 10 segundos exactos
+                }
+            } else {
+                alert("Tu navegador no soporta geolocalización.");
+            }
+        }
+
+        // FÓRMULA HAVERSINE PARA GEOFENCING (Retorno Automático)
+        function calcularDistancia(lat1, lon1, lat2, lon2) {
+            const R = 6371e3; // Radio de la tierra en metros
+            const φ1 = lat1 * Math.PI/180;
+            const φ2 = lat2 * Math.PI/180;
+            const Δφ = (lat2-lat1) * Math.PI/180;
+            const Δλ = (lon2-lon1) * Math.PI/180;
+
+            const a = Math.sin(Δφ/2) * Math.sin(Δφ/2) +
+                      Math.cos(φ1) * Math.cos(φ2) *
+                      Math.sin(Δλ/2) * Math.sin(Δλ/2);
+            const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+            return R * c; // en metros
+        }
+
+        function verificarDistanciaBase() {
+            const distancia = calcularDistancia(miLat, miLng, BASE_LAT, BASE_LNG);
+            document.getElementById('distanciaBase').innerText = Math.round(distancia) + " m";
+
+            // Retorno automático si está a menos de 150 metros
+            if (distancia < 150) {
+                alert("¡Base detectada por geofencing! Finalizando servicio automáticamente.");
+                limpiarServicio();
+            }
+        }
+
+        // CONTROL DE ESTADOS (4. Lógica de fondos y botones)
+        function cambiarEstado(nuevoEstado) {
+            estadoActual = nuevoEstado;
+            document.body.className = 'estado-' + nuevoEstado;
+
+            if (nuevoEstado === 'rojo') { // EN SERVICIO
+                document.getElementById('btnIniciar').style.display = 'none';
+                document.getElementById('btnVolviendo').style.display = 'block';
+                document.getElementById('btnFinalizar').style.display = 'block';
+                document.getElementById('statusText').innerText = 'Estado: En Servicio';
+                document.getElementById('infoDistancia').style.display = 'none';
+                iniciarRastreo();
+                
+                // Forzar primer envío a Firebase instantáneo
+                setTimeout(() => {
+                    if(miLat !== 0) {
+                        db.ref('operaciones/' + pibeId).set({
+                            lat: miLat, lng: miLng, estado: 'rojo', timestamp: firebase.database.ServerValue.TIMESTAMP
+                        });
+                    }
+                }, 1000);
+
+            } else if (nuevoEstado === 'amarillo') { // VOLVIENDO
+                document.getElementById('btnVolviendo').style.display = 'none';
+                document.getElementById('statusText').innerText = 'Estado: Volviendo a Base';
+                document.getElementById('infoDistancia').style.display = 'block';
+            }
+        }
+
+        // 3. BLINDAJE DE WHATSAPP (Evitar 1000 ventanas)
+        function enviarWhatsapp() {
+            let mensaje = `Ubicación operativa actual.%0AEstado: ${estadoActual.toUpperCase()}%0ALink: https://maps.google.com/?q=${miLat},${miLng}`;
+            let url = `https://api.whatsapp.com/send?text=${mensaje}`;
+            // Identificador único de pestaña forzado
+            window.open(url, 'whatsapp_pibe');
+        }
+
+        // FINALIZAR SERVICIO (Cartel de confirmación y limpieza)
+        function finalizarServicio() {
+            if(confirm("¿Estás seguro que deseas finalizar el servicio y desconectar el GPS?")) {
+                limpiarServicio();
+            }
+        }
+
+        function limpiarServicio() {
+            // Limpiar Firebase
+            db.ref('operaciones/' + pibeId).remove();
+            
+            // Detener GPS e Intervalos
+            if (watchId) navigator.geolocation.clearWatch(watchId);
+            if (transmisorInterval) clearInterval(transmisorInterval);
+            
+            transmisorInterval = null;
+            watchId = null;
+            estadoActual = 'verde';
+
+            // Restaurar UI
+            document.body.className = 'estado-verde';
+            document.getElementById('btnIniciar').style.display = 'block';
+            document.getElementById('btnVolviendo').style.display = 'none';
+            document.getElementById('btnFinalizar').style.display = 'none';
+            document.getElementById('infoDistancia').style.display = 'none';
+            document.getElementById('statusText').innerText = 'Estado: Disponible';
+        }
+
+        // Iniciar pidiendo GPS para ubicar en mapa al abrir, pero sin transmitir aún
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(pos => {
+                miLat = pos.coords.latitude;
+                miLng = pos.coords.longitude;
+                map.setView([miLat, miLng], 15);
+                if(!marker) marker = L.marker([miLat, miLng]).addTo(map);
+                else marker.setLatLng([miLat, miLng]);
+            }, err => console.log(err), {enableHighAccuracy: true});
+        }
+    </script>
+</body>
+</html>
